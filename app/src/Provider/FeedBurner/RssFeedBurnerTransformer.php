@@ -5,19 +5,24 @@ namespace App\Provider\FeedBurner;
 
 use App\Dto\RssFeedDto;
 use App\Provider\AbstractResponseDtoTransformer;
+use App\Provider\UnexpectedTypeException;
 use DateTime;
 use Exception;
 
 class RssFeedBurnerTransformer extends AbstractResponseDtoTransformer
 {
     /**
-     * @param FeedBurnerResponse $feedBurner
+     * @param $feedBurner
      *
      * @return RssFeedDto
      * @throws Exception
      */
     public function transformFromObject($feedBurner): RssFeedDto
     {
+        if (!$feedBurner instanceof FeedBurnerResponse) {
+            throw new UnexpectedTypeException('Expected type of FeedBurnerResponse but got ' . \get_class($feedBurner));
+        }
+
         $dto = new RssFeedDto();
 
         $dto->pubishedDate =  new DateTime($feedBurner->pubDate);

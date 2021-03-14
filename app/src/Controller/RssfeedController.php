@@ -32,8 +32,7 @@ class RssfeedController extends AbstractFOSRestController{
    */
     public function getRssFeeds(): JsonResponse
     {
-        $feeds = $this->rssfeedService->getRssFeeds();
-        return $this->response($feeds);
+        return $this->response($this->rssfeedService->getRssFeeds());
     }
   
     /**
@@ -46,6 +45,6 @@ class RssfeedController extends AbstractFOSRestController{
    */
   public function response($data, $status = 200, $headers = []) : JsonResponse
   {
-   return new JsonResponse($data, $status, $headers);
+      return new JsonResponse($data, $status, $headers);
   }
 }
